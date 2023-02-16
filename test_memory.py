@@ -26,6 +26,10 @@ def invalid_addresses2():
 def invalid_values():
 	return numpy.random.randint(0x100, 0x1000, TEST_SIZE)
 
+@pytest.fixture
+def array_of_values():
+	return numpy.random.randint(0x0, 0xFF, size=TEST_SIZE)
+
 
 
 def test_read_write_memory(valid_addresses, valid_values):
@@ -46,3 +50,10 @@ def test_data_loss_for_invalid_values(valid_addresses, invalid_values):
 	for address, value in zip(valid_addresses, invalid_values):
 		memory.write(address, value)
 		assert memory.read(address) != value
+
+def test_insert_array(array_of_values):
+	address = numpy.random.randint(0x0, 0xFFF)
+	memory.write(address, array_of_values)
+
+	for i in range(TEST_SIZE):
+		assert memory.read(address + i) == array_of_values[i]
