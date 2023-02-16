@@ -36,11 +36,11 @@ class Chip8Register(Chip8RegisterInterface):
 class Chip8MemoryRegister(Chip8RegisterInterface):
 	def set(self, value:int) -> int:
 		"""
-		Store a value in this register. The Chip 8 memory register is 16 bits long, but only 12 bits are needed for the 4k memory. 
-		Therefore, attempting to store a number larger than 12 bits (0xFFF) will result in data loss.
+		Store a value in this register. Unlike the other registers, the Chip 8 memory register is 16 bits long.
+		Attempting to store a value greater than 0xFFFF will result in data loss.
 
 		Parameters
 		----------
-		value : An integer ranging from 0x0 to 0xFFF
+		value : An integer ranging from 0x0 to 0xFFFF
 		"""
-		self.state = value & 0xFFF
+		self.state = value & 0xFFFF

@@ -27,8 +27,8 @@ def test_set_memory_register():
 	assert memory_register.get_state() == 0xF4C
 
 def test_memory_register_overflow_underflow():
-	memory_register.set(0x23AB)
-	assert memory_register.get_state() == 0x3AB
+	memory_register.set(0x23AB0)
+	assert memory_register.get_state() == 0x3AB0
 
 	memory_register.set(-0x1)
-	assert memory_register.get_state() == 0xFFF
+	assert memory_register.get_state() == 0xFFFF
