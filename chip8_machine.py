@@ -44,8 +44,11 @@ class Chip8Machine:
 	def write_memory_register(self, value:int) -> None:
 		self._memory_register.set(value)
 	
-	def read_memory(self, address) -> int:
+	def read_memory(self, address:int) -> int:
 		return self._memory.read(address)
+
+	def read_memory_range(self, start:int, finish:int):
+		return self._memory.read_range(start, finish)
 
 	def write_memory(self, address:int, value:int) -> None:
 		self._memory.write(address, value)
