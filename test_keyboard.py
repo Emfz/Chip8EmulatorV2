@@ -10,8 +10,9 @@ def valid_inputs():
 	return ['1','2','3','4','q','w','e','r','a','s','d','f','z','x','c','v']
 
 @pytest.fixture
-def input_to_hex():
-	return {'1':0x1,
+def str_to_hex():
+	return {
+			'1':0x1,
 			'2':0x2,
 			'3':0x3,
 			'4':0xC,
@@ -27,17 +28,39 @@ def input_to_hex():
 			'x':0,
 			'c':0xB,
 			'v':0xF			
-			}
+		}
 
-def test_check_if_key_is_pressed(valid_inputs, input_to_hex):
+@pytest.fixture
+def hex_to_str():
+	return {
+			0x1:'1',
+			0x2:'2',
+			0x3:'3',
+			0xC:'4',
+			0x4:'q',
+			0x5:'w',
+			0x6:'e',
+			0xD:'r',
+			0x7:'a',
+			0x8:'s',
+			0x9:'d',
+			0xE:'f',
+			0xA:'z',
+			0x0:'x',
+			0xB:'c',
+			0xF:'v'
+		}
+	
+
+def test_check_if_key_is_pressed(valid_inputs, str_to_hex):
 	for input in valid_inputs:
 		keyboard.wait(input)
-		assert chip8_keyboard.is_key_pressed(input) == True
+		assert chip8_keyboard.is_key_pressed(str_to_hex[input]) == True
 	
 	time.sleep(1)
 
 	for input in valid_inputs:
-		assert chip8_keyboard.is_key_pressed(input) == False
+		assert chip8_keyboard.is_key_pressed(str_to_hex[input]) == False
 		
 def test_wait_for_input():
     input = chip8_keyboard.wait_for_input()
