@@ -57,3 +57,10 @@ def test_insert_array(array_of_values):
 
 	for i in range(TEST_SIZE):
 		assert memory.read(address + i) == array_of_values[i]
+
+def test_read_range():
+	start_address = numpy.random.randint(0x0,0xFF)
+	values = numpy.random.randint(0x0, 0xFF, size=1000)
+	memory.write(start_address, values)
+	range = memory.read_range(start_address, start_address + len(values))
+	assert numpy.array_equal(values, range)

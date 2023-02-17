@@ -12,7 +12,22 @@ class Chip8Memory:
 		----------
 		address : int in the range 0x0, 0xFFF
 		"""
-		return self.memory[address]
+		return self.memory[address & 0xFFF]
+
+	def read_range(self, start:int, finish:int) -> numpy.ndarray:
+		"""
+		Read a chunk of memory. Start inclusive, finish non-inclusive.
+
+		Parameters
+		----------
+		start : int in the range (0x0,0xFFF)
+		finish : int in the range (0x0,0xFFF)
+
+		Returns
+		-------
+		A numpy.ndarray containing a copy of the memory in the specified range.
+		"""
+		return self.memory[start:finish]
 	
 	def write(self, address:int, value:int|numpy.ndarray) -> None:
 		"""
