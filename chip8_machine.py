@@ -20,6 +20,9 @@ class Chip8Machine:
 	def draw_sprite(self, sprite:numpy.ndarray, x:int, y:int) -> bool:
 		return self._screen.draw_sprite(sprite, x, y)
 
+	def update_screen(self) -> None:
+		self._screen.update()
+
 	def clear_screen(self) -> None:
 		self._screen.clear()
 
@@ -50,7 +53,7 @@ class Chip8Machine:
 	def read_memory_range(self, start:int, finish:int):
 		return self._memory.read_range(start, finish)
 
-	def write_memory(self, address:int, value:int) -> None:
+	def write_memory(self, address:int, value:int|numpy.ndarray) -> None:
 		self._memory.write(address, value)
 	
 	def is_key_pressed(self, input:str) -> bool:
