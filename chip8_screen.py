@@ -1,4 +1,4 @@
-from pygame import SCALED, FULLSCREEN, PixelArray
+from pygame import SCALED, FULLSCREEN, PixelArray, time
 from pygame.display import init, set_mode, get_surface, get_init, flip
 from pygame.pixelcopy import array_to_surface, surface_to_array
 import numpy
@@ -99,7 +99,7 @@ class Chip8Screen:
 		xor = lambda a,b : (a and not b) or (b and not a)
 
 		state = self.get_state()
-		result_array = numpy.zeros(shape=(self.width, self.height), dtype=int)
+		result_array = numpy.copy(state)
 		screen_pixel_flipped = False
 		for byte in sprite:
 			mask = 0b10000000

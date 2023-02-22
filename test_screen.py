@@ -29,6 +29,10 @@ def sprite2():
 def sprite3():
 	return numpy.array([0xAA])
 
+@pytest.fixture
+def sprite4():
+	return numpy.array([0xAA, 0x55])
+
 
 
 def test_screen_init():
@@ -161,3 +165,32 @@ def test_check_if_drawsprite_toggles_pixels(sprite3):
 	manual_array = numpy.zeros(shape=(screen.width, screen.height), dtype=int)
 	assert numpy.array_equal(state, manual_array)
 	assert pixels_flipped == True
+
+def test_screen_preserves_state(sprite4):
+	screen.clear()
+	screen.draw_sprite(sprite4, 0, 0)
+	screen.update()
+	screen.draw_sprite(sprite4, 8, 0)
+	screen.update()
+
+	manual_array = numpy.zeros(shape=(screen.width, screen.height), dtype=int)
+	manual_array[0,0] = white
+	manual_array[2,0] = white
+	manual_array[4,0] = white
+	manual_array[6,0] = white
+
+	manual_array[1,1] = white
+	manual_array[3,1] = white
+	manual_array[5,1] = white
+	manual_array[7,1] = white
+
+	manual_array[8,0] = white
+	manual_array[10,0] = white
+	manual_array[12,0] = white
+	manual_array[14,0] = white
+
+	manual_array[9,1] = white
+	manual_array[11,1] = white
+	manual_array[13,1] = white
+	manual_array[15,1] = white
+	assert numpy.array_equal(screen.get_state(), manual_array)
