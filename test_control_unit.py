@@ -205,7 +205,6 @@ def test_memory_register_opcodes():
 	first_digit = number % 10
 	second_digit = number // 10 % 10
 	third_digit = number // 100 % 10
-	print(f"the number is {number}")
 	assert chip8vm.machine.read_memory(chip8vm.machine.read_memory_register()) == third_digit
 	assert chip8vm.machine.read_memory(chip8vm.machine.read_memory_register() + 1) == second_digit
 	assert chip8vm.machine.read_memory(chip8vm.machine.read_memory_register() + 2) == first_digit

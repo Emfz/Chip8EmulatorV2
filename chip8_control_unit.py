@@ -252,8 +252,6 @@ class Chip8ControlUnit():
 		sprite_height = remainder & 0xF
 		sprite = self.machine.read_memory_range(start_address, start_address + sprite_height)
 		x, y = self.read_two_registers(remainder)
-		print(f"The values before drawing are.")
-		print(f"startadrress:{hex(start_address)}, spriteheight:{hex(sprite_height)}, x:{x}, y:{y}, sprite:{sprite}")
 		pixels_flipped = self.machine.draw_sprite(sprite, x, y)
 		if pixels_flipped:
 			self.set_registerF(0x1)
@@ -322,7 +320,6 @@ class Chip8ControlUnit():
 		starting_address = self.machine.read_memory_register()
 		value = self.read_one_register(remainder)
 		
-		print(f"The value i got is {value}")
 		self.machine.write_memory(starting_address, value // 100 % 10)
 		self.machine.write_memory(starting_address + 1, value // 10 % 10)
 		self.machine.write_memory(starting_address + 2, value % 10)
@@ -334,9 +331,7 @@ class Chip8ControlUnit():
 		"""
 		starting_address = self.machine.read_memory_register()
 		number_of_registers = (remainder & 0xF00) >> 0x8
-		print(f"numberofregisters: {number_of_registers}")
 		for i in range(number_of_registers + 1):
-			print(f"starting address:{starting_address}, i:{i}, numberofregisters:{number_of_registers}, remainder:{hex(remainder)}")
 			self.machine.write_memory(starting_address + i, self.machine.read_register(i))
 		
 	def opcodeF_65(self, remainder:int):
@@ -344,7 +339,6 @@ class Chip8ControlUnit():
 		Fill registers V0 to Vx (inclusive) in memory, from values in memory starting from address I.
 		"""
 		starting_address = self.machine.read_memory_register()
-		print(f"My starting address is  {starting_address}")
 		number_of_registers = (remainder & 0xF00) >> 0x8
 		for i in range(number_of_registers + 1):
 			self.machine.write_register(i, self.machine.read_memory(starting_address + i))
