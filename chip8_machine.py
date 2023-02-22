@@ -12,7 +12,7 @@ class Chip8Machine:
 		self._registers = [Chip8Register() for i in range(17)]
 		self._memory_register = Chip8MemoryRegister()
 		self._memory = Chip8Memory()
-		self._keyboard = Chip8Keyboard
+		self._keyboard = Chip8Keyboard()
 		self._stack = Chip8Stack()
 		self._timer = Chip8Timer()
 		self._sound_timer = Chip8Timer()
@@ -56,7 +56,7 @@ class Chip8Machine:
 	def write_memory(self, address:int, value:int|numpy.ndarray) -> None:
 		self._memory.write(address, value)
 	
-	def is_key_pressed(self, input:str) -> bool:
+	def is_key_pressed(self, input:int) -> bool:
 		return self._keyboard.is_key_pressed(input)
 
 	def wait_for_input(self) -> None:
