@@ -77,8 +77,7 @@ class Chip8ControlUnit():
 		"""
 		Return from subroutine
 		"""
-		# 0x2 is subtracted because decode_and_execute increments the program counter by 0x2
-		self.program_counter = self.machine.pop_stack() -0x2
+		self.program_counter = self.machine.pop_stack()
 	
 	def opcode1(self, remainder:int):
 		"""
