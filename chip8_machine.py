@@ -59,8 +59,8 @@ class Chip8Machine:
 	def is_key_pressed(self, input:int) -> bool:
 		return self._keyboard.is_key_pressed(input)
 
-	def wait_for_input(self) -> None:
-		self._keyboard.wait_for_input()
+	def wait_for_input(self) -> int:
+		return self._keyboard.wait_for_input()
 	
 	def push_stack(self, value:int) -> None:
 		self._stack.push(value)
