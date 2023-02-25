@@ -105,20 +105,21 @@ class Chip8Screen:
 			mask = 0b10000000
 			iteration = 0
 			while mask > 0:
-				try:
-					# Get a single bit from the sprite's byte
-					bit = byte & mask
-					# Toggle the current screen pixel if the sprite's bit = 1, set to 0 otherwise.
-					result_array[x + iteration, y] = xor(bit, state[x + iteration, y]) and white
-					# Check if the current screen pixel was toggled from 1 to 0
-					if bit and state[x + iteration, y]:
-						screen_pixel_flipped = True
-				except IndexError:
-					# If the current pixel is outside of the screen, do nothing
-					pass
-				finally:
-					mask >>= 1
-					iteration += 1
+				# Get a single bit from the sprite's byte
+				bit = byte & mask
+
+				# Bitwise "and" done to wrap out-of-bounds pixels to the other side of the screen.
+				x_index = (x + iteration) & 0x3F
+				y_index = y & 0x1F
+				# Toggle the current screen pixel if the sprite's bit = 1, set to 0 otherwise.
+				result_array[x_index, y_index] = xor(bit, state[x_index, y_index]) and white
+
+				# Check if the current screen pixel was toggled from 1 to 0
+				if bit and state[x_index, y_index]:
+					screen_pixel_flipped = True
+
+				mask >>= 1
+				iteration += 1
 			y += 1
 
 		array_to_surface(self.surface, result_array)
