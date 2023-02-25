@@ -5,6 +5,7 @@ from chip8_register import Chip8Register, Chip8MemoryRegister
 from chip8_stack import Chip8Stack
 from chip8_timer import Chip8Timer
 from chip8_memory import Chip8Memory
+from chip8_font import font
 
 class Chip8Machine:
 	def __init__(self) -> None:
@@ -16,6 +17,10 @@ class Chip8Machine:
 		self._stack = Chip8Stack()
 		self._timer = Chip8Timer()
 		self._sound_timer = Chip8Timer()
+
+		# Load the font into memory
+		for key, value in font.items():
+			self._memory.write(key * 0x5, numpy.array(value))
 
 	def draw_sprite(self, sprite:numpy.ndarray, x:int, y:int) -> bool:
 		return self._screen.draw_sprite(sprite, x, y)
