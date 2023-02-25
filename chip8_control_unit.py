@@ -309,8 +309,9 @@ class Chip8ControlUnit():
 		"""
 		Set register I to the location of the char whose value is stored in Vx.
 		"""
-		# TODO: Implement font
-		pass
+		value = self.read_one_register(remainder)
+		# Multiply the value by 0x5 because each member of the font occupies 5 spots in memory.
+		self.machine.write_memory_register(value * 0x5)
 
 	def opcodeF_33(self, remainder:int):
 		"""
