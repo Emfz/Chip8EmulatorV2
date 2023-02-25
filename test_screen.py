@@ -23,7 +23,7 @@ def sprite1():
 
 @pytest.fixture
 def sprite2():
-	return numpy.array([0xB4, 0x4C])
+	return numpy.array([0xFF, 0xFF])
 
 @pytest.fixture
 def sprite3():
@@ -103,9 +103,9 @@ def test_draw_sprite(sprite1):
 	assert numpy.array_equal(state, manual_array)
 	assert pixels_flipped == False
 
-def test_draw_sprite_out_of_bounds_1(sprite2):
-	x = 62
-	y = 30
+def test_draw_sprite_out_of_bounds(sprite2):
+	x = 63
+	y = 31
 
 	screen.clear()
 	pixels_flipped = screen.draw_sprite(sprite2, x, y)
@@ -113,28 +113,33 @@ def test_draw_sprite_out_of_bounds_1(sprite2):
 	state = screen.get_state()
 
 	manual_array = numpy.zeros(shape=(screen.width, screen.height), dtype=int)
-	manual_array[62,30] = white
-	manual_array[63,30] = 0
-
-	manual_array[62,31] = 0
+	
+	# The pixel on the bottom right side
 	manual_array[63,31] = white
+	# The leftover pixels on the bottom left side
+	manual_array[0,31] = white
+	manual_array[1,31] = white
+	manual_array[2,31] = white
+	manual_array[3,31] = white
+	manual_array[4,31] = white
+	manual_array[5,31] = white
+	manual_array[6,31] = white
+
+	# The pixel on the top right side
+	manual_array[63,0] = white
+	# The leftover pixels on the top left side
+	manual_array[0,0] = white
+	manual_array[1,0] = white
+	manual_array[2,0] = white
+	manual_array[3,0] = white
+	manual_array[4,0] = white
+	manual_array[5,0] = white
+	manual_array[6,0] = white
+
 
 	assert numpy.array_equal(state, manual_array)
 	assert pixels_flipped == False
 
-def test_draw_sprite_out_of_bounds_2(sprite2):
-	x = 70
-	y = 40
-
-	screen.clear()
-	pixels_flipped = screen.draw_sprite(sprite2, x, y)
-	screen.update()
-	state = screen.get_state()
-
-	manual_array = numpy.zeros(shape=(screen.width, screen.height), dtype=int)
-
-	assert numpy.array_equal(state, manual_array)
-	assert pixels_flipped == False
 
 def test_check_if_drawsprite_toggles_pixels(sprite3):
 	x = 0
