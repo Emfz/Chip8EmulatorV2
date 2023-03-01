@@ -1,5 +1,9 @@
 env
+build
+dist
+
 exp.py
 __pycache__
 
 *.ch8
+*.spec

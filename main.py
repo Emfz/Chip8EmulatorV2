@@ -13,7 +13,7 @@ if __name__ == "__main__":
 	timer_tick_every_x_cycles = current_fps // 60
 	cycle_counter = 0
 	
-	chip8vm.load_file("pong.ch8")
+	chip8vm.load_file("rom.ch8")
 
 	while True:
 		chip8vm.execute_instruction()
